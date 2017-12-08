@@ -1,11 +1,17 @@
 <?php
+declare(strict_types=1);
+
 namespace BOF;
 
+use BOF\DependencyInjection\CompilerPass\ReportPrinterPass;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application as ConsoleApplication;
-use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\DependencyInjection\AddConsoleCommandPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class Application
@@ -18,36 +24,36 @@ class Application extends ConsoleApplication
      */
     protected $container;
 
-    /**
-     * @param string $name    The name of the application
-     * @param string $version The version of the application
-     */
-    public function __construct($name = 'app', $version = '1')
+    public function __construct(string $name = 'app', string $version = '1')
     {
         $this->container = new ContainerBuilder();
         $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__.'/../app'));
-        $loader->load('config.yml');
         $loader->load('services.yml');
+        $loader->load('repository.yml');
+
+
+        //Collect printer services
+        $this->container->addCompilerPass(new ReportPrinterPass());
+        //Collect command services
+        $this->container->addCompilerPass(new AddConsoleCommandPass());
+        $this->initDoctrine();
+        $this->container->compile();
 
         // Initiate app
         parent::__construct($name, $version);
 
         // Add configured commands
-        foreach ($this->getConfiguredCommands() as $command) {
-            $this->add($command);
+        foreach ($this->container->getParameter('console.command.ids') as $commandId) {
+            $this->add($this->container->get($commandId));
         }
     }
 
-    /**
-     * @return Command[] An array of default Command instances
-     */
-    protected function getConfiguredCommands()
+    protected function initDoctrine(): void
     {
-        $commands = [];
-        foreach ($this->container->findTaggedServiceIds('console.command') as $commandId => $command) {
-            $commands[] = $this->container->get($commandId);
-        }
-        return $commands;
+        $config = Yaml::parseFile(__DIR__.'/../app/doctrine.yml');
+        $setup = Setup::createAnnotationMetadataConfiguration($config['entity_path'], $config['dev_mode'], null, null ,false);
+        $entityManager = EntityManager::create($config['dbal'], $setup);
+        $this->container->set('orm.entity_manager', $entityManager);
     }
 
     /**

@@ -6,5 +6,31 @@ services:
 
     app.command.report_yearly:
         class: BOF\Command\ReportYearlyCommand
+        calls:
+            - [setReportBuilder, ["@app.report.builder"]]
+            - [setReportPrinterCollector, ["@app.report.printer.collector"]]
         tags:
             - { name: console.command }
+
+    app.report.builder:
+        class: BOF\Service\ReportBuilderService
+        arguments:
+            - "@app.report.repository.report_row"
+
+    app.report.manager.report:
+        class: BOF\Manager\ReportManager
+        arguments:
+            - "@orm.entity_manager"
+
+    app.report.printer.collector:
+        class: BOF\Service\Printer\ReportPrinterCollectorService
+
+    app.report.printer.console_printer:
+        class: BOF\Service\Printer\ConsolePrinterService
+        tags:
+            - { name: report.printer }
+#
+#    app.report.printer.html_printer:
+#        class: BOF\Service\Printer\HtmlPrinterService
+#        tags:
+#            - { name: report.printer }

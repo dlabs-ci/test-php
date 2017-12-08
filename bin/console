@@ -2,5 +2,6 @@
 <?php
 require __DIR__.'/../vendor/autoload.php';
 
+
 $application = new \BOF\Application('BoF Developer Test', '0.0.1');
 $application->run();
