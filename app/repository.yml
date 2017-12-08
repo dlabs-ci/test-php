@@ -1,0 +1,10 @@
+services:
+  app.report.repository.profile:
+    class: BOF\Repository\ProfileRepository
+    factory: ['@orm.entity_manager', getRepository]
+    arguments: ['BOF\Entity\Profile']
+
+  app.report.repository.report_row:
+    class: BOF\Repository\YearlyReportCalculatedRowRepository
+    factory: ['@orm.entity_manager', getRepository]
+    arguments: ['BOF\Entity\YearlyReportCalculatedRow']

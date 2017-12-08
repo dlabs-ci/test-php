@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace BOF\Command;
 
 use Doctrine\DBAL\Driver\Connection;
@@ -8,19 +10,19 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class TestDataResetCommand extends ContainerAwareCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('test:data:reset')
             ->setDescription('Reset MySQL data');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
         $io->title('Generating data');
         /** @var $db Connection */
-        $db = $this->getContainer()->get('database_connection');
+        $db = $this->getContainer()->get('orm.entity_manager')->getConnection();
         $startDate = strtotime('2014-09-01');
         $endDate = strtotime('2017-02-11');
 
@@ -52,7 +54,7 @@ class TestDataResetCommand extends ContainerAwareCommand
                     $db->query($sql);
                 }
 
-                $currentDate = mktime(0,0,0, date('m', $currentDate), date('d', $currentDate) + 1, date('Y', $currentDate));
+                $currentDate = mktime(0,0,0, (int) date('m', $currentDate), (int) date('d', $currentDate) + 1, (int) date('Y', $currentDate));
             }
             $progress->advance();
         }

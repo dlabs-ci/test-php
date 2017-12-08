@@ -1,0 +1,10 @@
+entity_path:
+    - './Entity'
+
+dev_mode: false
+
+dbal:
+    driver: pdo_mysql
+    user: bof-test
+    password: bof-test
+    dbname: bof_test
