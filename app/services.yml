@@ -8,3 +8,13 @@ services:
         class: BOF\Command\ReportYearlyCommand
         tags:
             - { name: console.command }
+
+    app.command.generate_reports:
+        class: BOF\Command\GenerateReportsCommand
+        tags:
+            - { name: console.command }
+
+    app.command.update_reports:
+        class: BOF\Command\UpdateReportsCommand
+        tags:
+            - { name: console.command }
