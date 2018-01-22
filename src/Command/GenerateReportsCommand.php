@@ -59,6 +59,7 @@ class GenerateReportsCommand extends ContainerAwareCommand
             foreach ( $year_data as $month => $views ) 
             {
                 // MariaDB doesnt like Dec colum name ...
+                // Format data for database insertion
                 if ( $month == 12)
                 {
                     $row['Dcm'] = $views;
