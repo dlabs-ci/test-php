@@ -23,6 +23,10 @@ Suggestions:
    - a select with all available "year" options (can be cached and updated only when table is updated)".
    - other form controls that are used to display more taylored output which can serve to make more informed business decisions.
 
+Database modifications
+--------
+Added indexes to views.profile_id, views.date, profile.profile_id (primary) and profile.profile_name since join and where operate on these columns. Profiling showed gain in speed (less row scanned shown in explain).
+
 Test Cases
 --------
 1. If no year is specified as an argument, than it should defaults to current year.
