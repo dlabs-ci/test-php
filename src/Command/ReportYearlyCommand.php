@@ -25,7 +25,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input, $output);
         $db = $this->getContainer()->get('database_connection');
 
-         // Read arguments
+        // Read arguments
         $year = $input->getArgument(self::ARG_YEAR);
         if (!is_numeric($year)) {
             $io->error('Invalid argument "' . self::ARG_YEAR . '": ' . $year);
@@ -51,7 +51,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
             }
             $data[$i] = $row;
         }
-        
+
         $io->table($headers, $data);
     }
 }
