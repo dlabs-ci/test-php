@@ -28,7 +28,8 @@ class TestDataResetCommand extends ContainerAwareCommand
 
         $db->query('TRUNCATE views');
 
-        $profiles = $db->query('SELECT * FROM profiles')->fetchAll();
+        // Don't select profile_id=6
+        $profiles = $db->query('SELECT * FROM profiles LIMIT 5')->fetchAll();
 
         $progress = $io->createProgressBar(count($profiles));
         foreach ($profiles as $profile) {
