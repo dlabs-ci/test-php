@@ -41,6 +41,16 @@ class ReportYearlyCommand extends ContainerAwareCommand
         // Create headers
         $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         $headers = array_merge(['Profile ' . $year], $months);
+
+        // Set n/a values
+        foreach ($data as $i => $row) {
+            foreach ($row as $key => $value) {
+                if (is_null($value)) {
+                    $row[$key] = 'n/a';
+                }
+            }
+            $data[$i] = $row;
+        }
         
         $io->table($headers, $data);
     }
