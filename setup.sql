@@ -22,3 +22,6 @@ CREATE TABLE `bof_test`.`views` (
 ) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO `bof_test`.`profiles` VALUES(1, 'Karl Lagerfeld'), (2, 'Anna Wintour'), (3, 'Tom Ford'), (4, 'Pierre Alexis Dumas'), (5, 'Sandra Choi');
+
+-- Profile with no views
+INSERT INTO `bof_test`.`profiles` VALUES(6, 'John Doe');
