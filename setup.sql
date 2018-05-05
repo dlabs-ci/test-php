@@ -23,5 +23,52 @@ CREATE TABLE `bof_test`.`views` (
 
 INSERT INTO `bof_test`.`profiles` VALUES(1, 'Karl Lagerfeld'), (2, 'Anna Wintour'), (3, 'Tom Ford'), (4, 'Pierre Alexis Dumas'), (5, 'Sandra Choi');
 
+USE bof_test;
+
 -- Profile with no views
-INSERT INTO `bof_test`.`profiles` VALUES(6, 'John Doe');
+INSERT INTO profiles VALUES(6, 'John Doe');
+
+-- Create procedures
+DROP PROCEDURE IF EXISTS profile_views_yearly;
+DELIMITER //
+CREATE PROCEDURE profile_views_yearly(in_year INT)
+BEGIN
+    SELECT
+        p.profile_name,
+        SUM(r.Jan),
+        SUM(r.Feb),
+        SUM(r.Mar),
+        SUM(r.Apr),
+        SUM(r.May),
+        SUM(r.Jun),
+        SUM(r.Jul),
+        SUM(r.Aug),
+        SUM(r.Sep),
+        SUM(r.Oct),
+        SUM(r.Nov),
+        SUM(r.Dec)
+    FROM (
+        -- Sum of views per month
+        SELECT p.profile_id,
+            CASE MONTH(v.date) WHEN 1 THEN SUM(v.views) END AS Jan,
+            CASE MONTH(v.date) WHEN 2 THEN SUM(v.views) END AS Feb,
+            CASE MONTH(v.date) WHEN 3 THEN SUM(v.views) END AS Mar,
+            CASE MONTH(v.date) WHEN 4 THEN SUM(v.views) END AS Apr,
+            CASE MONTH(v.date) WHEN 5 THEN SUM(v.views) END AS May,
+            CASE MONTH(v.date) WHEN 6 THEN SUM(v.views) END AS Jun,
+            CASE MONTH(v.date) WHEN 7 THEN SUM(v.views) END AS Jul,
+            CASE MONTH(v.date) WHEN 8 THEN SUM(v.views) END AS Aug,
+            CASE MONTH(v.date) WHEN 9 THEN SUM(v.views) END AS Sep,
+            CASE MONTH(v.date) WHEN 10 THEN SUM(v.views) END AS Oct,
+            CASE MONTH(v.date) WHEN 11 THEN SUM(v.views) END AS Nov,
+            CASE MONTH(v.date) WHEN 12 THEN SUM(v.views) END AS `Dec`
+        FROM profiles p LEFT JOIN views v ON p.profile_id = v.profile_id
+        WHERE YEAR(v.date) = in_year
+        GROUP BY p.profile_id, MONTH(v.date)
+    ) r
+    RIGHT JOIN profiles p ON r.profile_id = p.profile_id
+    -- Group views per profile
+    GROUP BY p.profile_id
+    ORDER BY p.profile_name;
+END//
+DELIMITER ;

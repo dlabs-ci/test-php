@@ -17,7 +17,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $this
             ->setName('report:profiles:yearly')
             ->setDescription('Page views report')
-            ->addArgument(self::ARG_YEAR, InputArgument::REQUIRED, 'What year?');
+            ->addArgument(self::ARG_YEAR, InputArgument::REQUIRED, 'Year for the report');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -33,19 +33,15 @@ class ReportYearlyCommand extends ContainerAwareCommand
         }
 
         // Fetch data
-        $stmt = $db->prepare('
-            SELECT profile_name, MONTH(v.date) AS month, SUM(v.views) AS views
-            FROM profiles p
-            LEFT JOIN views v ON p.profile_id = v.profile_id
-            WHERE YEAR(v.date) = ? OR v.profile_id IS NULL
-            GROUP BY p.profile_id, month
-        ');
+        $stmt = $db->prepare('CALL profile_views_yearly(?)');
         $stmt->bindValue(1, $year);
         $stmt->execute();
         $data = $stmt->fetchAll();
 
-        $headers = ['Profile ' . $year, 'month', 'views'];
-
+        // Create headers
+        $months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        $headers = array_merge(['Profile ' . $year], $months);
+        
         $io->table($headers, $data);
     }
 }
