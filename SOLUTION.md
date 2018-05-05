@@ -11,7 +11,7 @@ Spent: 1 hour
 Solution
 --------
 
-Yearly reports for number of profile views are built using a stored procedure declared inside `setup.sql` file. Data is fetched inside the command using a simple call to the MySQL procedure. After that, table headers and "NULL" values are transformed to be more UI friendly. This could be accomplished inside the procedure itself, but it might end up being used in some other SQL script where `NULL` values are preferred.
+Yearly reports for number of profile views are built using a stored procedure declared inside `setup.sql` file. Data is fetched inside the command using a simple call to the MySQL procedure. After that, table headers and `NULL` values are transformed to be more UI friendly. This could be accomplished inside the procedure itself, but it might end up being used in some other SQL script where `NULL` values are preferred.
 
 ### Test cases
   - Validate output table format (all columns present, year in "Profile" column)
