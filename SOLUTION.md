@@ -13,6 +13,14 @@ Solution
 Actual coding was under 1 hour. Rest of the time was spent on writeing test and code comments. 
 I spent a lot of time googling doctrine and symphony syntact since I haven't used netther before.
 
+I added an index to table views.
+
+I desided to use a simpler SQL and than format the data in PHP. I like to keep the SQL queries as simple as possible.
+
+For a better product some cachng should be used because data does't change during last years. In my solution you could also use a permanebt cache for the views by the month. That way you would only have to  query the database for the current month and year.
+
+You could also provide the user with the list of years that the data is availabe. User can then just chose the year. Also some sort of GUI shuld be used (Web, Electron,...) to make the report look more friendly.
+
 Test cases
 ----------
 
