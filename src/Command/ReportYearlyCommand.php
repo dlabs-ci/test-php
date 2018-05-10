@@ -64,7 +64,8 @@ class ReportYearlyCommand extends ContainerAwareCommand
             $sql_query .= ' FROM `views` JOIN profiles ON profiles.profile_id = views.profile_id WHERE YEAR(views.date) = ' . $year . ' GROUP BY views.profile_id';
 
             $profiles = $db->query($sql_query)->fetchAll();
-            
+
+
             /** Empty values to strin 'N/A' */
             $profiles = ArrayReplace::arrayReplace($profiles, 'N/A');
 
