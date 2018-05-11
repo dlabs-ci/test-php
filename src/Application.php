@@ -50,6 +50,7 @@ class Application extends ConsoleApplication
         return $commands;
     }
 
+
     /**
      * @return ContainerBuilder
      */
