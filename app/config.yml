@@ -6,3 +6,13 @@ services:
         class: \Doctrine\DBAL\Driver\Connection
         factory: [\Doctrine\DBAL\DriverManager, getConnection]
         arguments: [{url: 'mysql://bof-test:bof-test@127.0.0.1/bof_test'}, '@database_configuration']
+
+    em_configuration:
+        class: \Doctrine\ORM\Tools\Setup
+        factory: [ \Doctrine\ORM\Tools\Setup, 'createAnnotationMetadataConfiguration']
+        arguments: [['src'], true]
+
+    entity_manager:
+        class: \Doctrine\ORM\EntityManager
+        factory: [\Doctrine\ORM\EntityManager, create]
+        arguments: [{dbname: 'bof_test', user: 'bof-test', password: 'bof-test', host: 'localhost', driver: 'pdo_mysql'}, '@em_configuration']

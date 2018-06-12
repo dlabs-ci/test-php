@@ -16,6 +16,7 @@ CREATE TABLE `bof_test`.`profiles` (
 
 DROP TABLE IF EXISTS `bof_test`.`views`;
 CREATE TABLE `bof_test`.`views` (
+`id` INT NOT NULL AUTO_INCREMENT,
 `profile_id` INT NOT NULL ,
 `date` DATE NOT NULL ,
 `views` INT NOT NULL
