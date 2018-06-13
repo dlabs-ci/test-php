@@ -12,14 +12,18 @@ use Doctrine\Common\ClassLoader;
 use BOF\Entity\Profile;
 use Doctrine\ORM\Configuration;
 use BOF\Entity\View;
+use Symfony\Component\Console\Input\InputArgument;
 
 class ReportYearlyCommand extends ContainerAwareCommand
 {
+    const DEFAULT_YEAR = 2016;
+
     protected function configure()
     {
         $this
             ->setName('report:profiles:yearly')
             ->setDescription('Page views report')
+            ->addArgument('year', InputArgument::OPTIONAL)
         ;
     }
 
@@ -27,25 +31,16 @@ class ReportYearlyCommand extends ContainerAwareCommand
     {
         /** @var $db Connection */
         $io = new SymfonyStyle($input,$output);
-        // $db = $this->getContainer()->get('database_connection');
-
-        // $profiles = $db->query('SELECT profile_name FROM profiles')->fetchAll();
-
         
         $em = $this->getContainer()->get('entity_manager');
-        // $profile = $em->find(Profile::class, 1);
-        $profile = $em->getRepository(Profile::class);
-        $profiles = $profile->findWithViewsForYear(2014);
-        // var_dump($profiles);exit;
+        $year = $input->hasArgument('year') && is_numeric($input->getArgument('year')) ? $input->getArgument('year') : self::DEFAULT_YEAR;
+        $repo = $em->getRepository(Profile::class);
+        $profiles = $repo->findWithViewsForYear($year);
 
         // // Show data in a table - headers, data
-        $io->table(['Profile'], $profiles);
-
-        // $profiles = $profile->findBy(['profile_id' => 1]);
-        // var_dump($profiles[0]->getViews()[6]->getViews());
-
-        // $stmt = $em->getConnection()->prepare($sql);
-        // $stmt->execute();
-        // var_dump($stmt->fetchAll());
+        $headers = $repo->months;
+        $headers[0] = 'Profile ' . $year;
+        ksort($headers);
+        $io->table($headers, $profiles);
     }
 }

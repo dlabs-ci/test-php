@@ -30,7 +30,6 @@ class ProfileRepository extends EntityRepository
         $stmt->execute([
             'year' => $year
         ]);
-
         return $stmt->fetchAll();
     }
 
@@ -42,12 +41,11 @@ class ProfileRepository extends EntityRepository
      */
     protected function buildQueryForYearViews($year)
     {
-        $sql = "SELECT profile_name, ";
+        $sql = "SELECT profiles.profile_name, ";
         $sql .= $this->generateSelectsForYearViews();
         
-        $sql .= "FROM bof_test.views  LEFT JOIN  bof_test.profiles ON views.profile_id = profiles.profile_id
-        WHERE YEAR(date) = :year
-        GROUP BY views.profile_id
+        $sql .= "FROM profiles LEFT JOIN views ON views.profile_id = profiles.profile_id AND YEAR(views.date) = :year
+        GROUP BY profiles.profile_id
         ORDER BY profiles.profile_name";
 
         return $sql;
