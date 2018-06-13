@@ -9,7 +9,8 @@
         "symfony/config": "^3.2",
         "symfony/yaml": "^3.2",
         "doctrine/dbal": "^2.5",
-        "doctrine/orm": "2.*"
+        "doctrine/orm": "2.*",
+        "behat/behat": "~3.0"
     },
     "license": "proprietary",
     "authors": [
