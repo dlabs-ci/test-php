@@ -10,24 +10,37 @@ namespace BOF\Models;
 class Profile {
 
     private $db;
-    private $profile_id;
 
     public function __construct($db) {
         $this->db = $db;
     }
 
-    public function getProfileId() {
+    /**
+     * Method for get all profiles
+     * @return type
+     */
+    public function getProfiles() {
 
         $profiles = $this->db->query('SELECT profile_name FROM profiles');
         return $profiles;
     }
-    
-    public function findByName($name){
+
+    /**
+     * Search profile by name
+     * @param type $name
+     * @return type
+     */
+    public function findByName($name) {
         return $this->db->query("SELECT profile_name FROM profiles where profile_name='$name'");
     }
-    
-    public function firstQuery($year){
-        
+
+    /**
+     * Method for filter historical data
+     * @param type $year
+     * @return type
+     */
+    public function historicalDataQuery($year) {
+
         return $this->db->query("SELECT  profile_name, 
 if(sum(CASE WHEN MONTH(date)=1 THEN views ELSE 0 END )=0, 'n/a', sum(CASE WHEN MONTH(date)=1 THEN views ELSE 0 END )) as 'JAN',
 if(sum(CASE WHEN MONTH(date)=2 THEN views ELSE 0 END )=0, 'n/a', sum(CASE WHEN MONTH(date)=2 THEN views ELSE 0 END )) as 'FEB',
@@ -48,7 +61,5 @@ ORDER BY profile_name");
     }
 
     private $profile_name;
-    
-    
 
 }
