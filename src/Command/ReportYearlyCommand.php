@@ -26,18 +26,18 @@ class ReportYearlyCommand extends ContainerAwareCommand
     {
         /** @var $db Connection */
         $io = new SymfonyStyle($input,$output);
+        $this->setDatabaseConnection();
         $this->setYear($input);
         
-        $db = $this->getContainer()->get('database_connection');
 
-        $profiles = $this->queryGetProfiles($db);
+        $profiles = $this->queryGetProfiles();
         if (empty($profiles)) {
             echo "There is no data available for that year. Please try another year";
             die;
        }
 
         $views_per_profile = $this->formateProfileData($profiles);
-        $views_per_profile = ($this->setAllMonths($views_per_profile));
+        $views_per_profile = $this->setAllMonths($views_per_profile);
         $views_per_profile = $this->sortMonths($views_per_profile);
 
         $header = $this->getMonthsArray();
@@ -46,16 +46,17 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $io->table($header, $views_per_profile);
 
     }
-    private function queryGetProfiles($db){
+    private function queryGetProfiles(){
 
         $sql = "SELECT  P.profile_id, P.profile_name,
 		GROUP_CONCAT(CONCAT(MONTH(V.date), '/', V.views) SEPARATOR '-') as monthviews
 		FROM views V
         JOIN profiles P ON (P.profile_id = V.profile_id)
         WHERE YEAR(V.date) = :year
-        GROUP BY P.profile_id, P.profile_name;";
+        GROUP BY P.profile_id, P.profile_name
+        ORDER BY P.profile_name;";
 
-        $stmt = $db->prepare($sql);
+        $stmt = $this->db->prepare($sql);
         $stmt->execute(array(':year' => $this->year));
 
         return $stmt->fetchAll();
@@ -66,7 +67,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
         
         foreach ($profiles as $row){
             $profile_id = $row['profile_id'];
-            $months = $points_arr = explode("-", $row['monthviews']);
+            $months =  explode("-", $row['monthviews']);
             $views_per_profile[$profile_id]['_name'] = $row['profile_name'];
             foreach ($months as $views_per_month){
                 $pos = strpos($views_per_month, '/');
@@ -123,5 +124,8 @@ class ReportYearlyCommand extends ContainerAwareCommand
     }
     private function setYear($input){
         $this->year = $input->getArgument('year');
+    }
+    private function setDatabaseConnection(){
+        $this->db = $this->getContainer()->get('database_connection');
     }
 }

@@ -1,0 +1,46 @@
+1: 
+bin/console report:profiles:yearly
+Result is   Not enough arguments (missing: "year").                 
+Because user did not give year argument, he cannot see report.
+2:
+bin/console report:profiles:yearly
+Result is: There is no data available for that year. Please try another year.
+There are no data for year user wants ro review.
+3:
+bin/console report:profiles:yearly 2014
+Result is:
+--------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+  Profile     2014      January   February   March    April    May      June     July     August   September   October   November   December  
+ --------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+  Anna Wintour          0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   7           6325      1792       5645      
+  Karl Lagerfeld        0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   42          6985      3119       960       
+  Pierre Alexis Dumas   0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   8178        9657      8366       5501      
+  Sandra Choi           0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   801         4620      2490       6333      
+  Tom Ford              0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   5469        4642      6003       2899      
+ --------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+ 
+ User got report, because he gave year argument and for the year he gave, there is data.
+ For months where there is no data in database he see 0 / NA.
+ 4: I added record which says that there was 0 views on Anna Wintour profile in January 2014, result 
+ is still the same (My prediction is that if record has 0 views, record is incorrect, if my logic is 
+ correct you that is corect result):
+--------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+  Profile     2014      January   February   March    April    May      June     July     August   September   October   November   December  
+ --------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+  Anna Wintour          0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   7           6325      1792       5645      
+  Karl Lagerfeld        0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   42          6985      3119       960       
+  Pierre Alexis Dumas   0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   8178        9657      8366       5501      
+  Sandra Choi           0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   801         4620      2490       6333      
+  Tom Ford              0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   5469        4642      6003       2899      
+ --------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+5:
+If you ask for year that has data but at least one model does not have any view in at least one month, that show month is shown as 0 / NA:
+--------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+  Profile     2014      January   February   March    April    May      June     July     August   September   October   November   December  
+ --------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
+  Anna Wintour          0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   7           6325      1792       5645      
+  Karl Lagerfeld        0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   42          6985      3119       960       
+  Pierre Alexis Dumas   0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   8178        9657      8366       5501      
+  Sandra Choi           0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   801         4620      2490       6333      
+  Tom Ford              0 / NA    0 / NA     0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   0 / NA   5469        4642      6003       2899      
+ --------------------- --------- ---------- -------- -------- -------- -------- -------- -------- ----------- --------- ---------- ---------- 
