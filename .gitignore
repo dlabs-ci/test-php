@@ -7,3 +7,4 @@ vendor
 .idea
 .localized
 .vscode
+composer.phar
