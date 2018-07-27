@@ -32,7 +32,6 @@ class TableRenderer implements Renderer
         $table->setColumnStyle(0, (new TableStyle())->setPadType(STR_PAD_RIGHT));
         $table->setStyle((new TableStyle())->setPadType(STR_PAD_LEFT));
 
-        //Table::setStyleDefinition((new TableStyle())->setPadType(STR_PAD_LEFT));
         foreach ($reportData as $year => $viewData) {
             $header = $tableHeaderTemplate;
             $header[0] .= $year;

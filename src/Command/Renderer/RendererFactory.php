@@ -14,10 +14,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RendererFactory
 {
 
-    const RENDERER_TABLE = "RENDERER_TABLE";
+    const RENDERER_TABLE = "TABLE";
     const RENDERER_CSV = "CSV";
+    const XX = "CSV";
 
     /**
+     * Make Renderer
+     *
      * @param $type
      * @param OutputInterface $output
      * @return TableRenderer
@@ -34,5 +37,19 @@ class RendererFactory
         }
 
         throw new RendererNotValidException();
+    }
+
+    /**
+     * Return available renderers.
+     *
+     * @return array
+     * @throws \ReflectionException
+     */
+    public static function getAvailableRenderers()
+    {
+        $refl = new \ReflectionClass(self::class);
+        return array_filter($refl->getConstants(), function ($value, $name) {
+            return strpos($name, "RENDERER_") === 0;
+        }, ARRAY_FILTER_USE_BOTH);
     }
 }

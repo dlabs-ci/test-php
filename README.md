@@ -1,8 +1,10 @@
 Backend Developer Test
 ======================
-The Business of Fashion uses various tests to assess whether a candidate is best suited to the expectations of the role advertised and the offer given.
+The Business of Fashion uses various tests to assess whether a candidate is best suited to the expectations of the role
+advertised and the offer given.
 
-This test aims to demonstrate your technical skills in practice: that you can deliver a solution which implements a scalable backend architecture, that produces the right results, and that pays attention to the requirement details.
+This test aims to demonstrate your technical skills in practice: that you can deliver a solution which implements a
+scalable backend architecture, that produces the right results, and that pays attention to the requirement details.
 
 Instructions & Deliverables
 ---------------------------
@@ -19,7 +21,8 @@ Instructions & Deliverables
     - You may use any tool to review/modify the associated database
     - You may use any google or other references for mysql/php syntax queries
 5. Describe how you can build a better "Product" for this coding task in SOLUTION.md and include your estimates
-7. Create a pull request to origin repository when you are satisfied with your solution (https://help.github.com/articles/about-pull-requests/) 
+7. Create a pull request to origin repository when you are satisfied with your solution
+   (https://help.github.com/articles/about-pull-requests/)
 
 
 Other Notes
@@ -30,13 +33,15 @@ Other Notes
 - Please remember to demonstrate your skills and how you would  normally approach
 development tasks regardless of this smaller task size.
 - I must ask that you time yourself so that you balance Quality and Delivery. I will not prescribe a
-deadline of X hours, instead, I would like you estimate the task, complete the task, and measure your elapsed time. Please submit your estimate and actual time with your code solution.
+deadline of X hours, instead, I would like you estimate the task, complete the task, and measure your elapsed time.
+Please submit your estimate and actual time with your code solution.
 
 
 Requirements / Story Definitions
 ================================
 
-So that I can have visibility on profile performance, as a Business Analyst, I want to report the monthly views for each profile.
+So that I can have visibility on profile performance, as a Business Analyst, I want to report the monthly views for
+each profile.
 CONDITIONS OF ACCEPTANCE (COA's)
 
 ``` gherkin
