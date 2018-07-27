@@ -6,7 +6,7 @@
  * Time: 11:43
  */
 
-namespace BOF\Command\Renderer;
+namespace BOF\Command\Renderer\Exception;
 
 
 class RendererNotValidException extends \Exception {

@@ -8,6 +8,7 @@
 
 namespace BOF\Command\Renderer;
 
+use BOF\Command\Renderer\Exception\RendererNotValidException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
