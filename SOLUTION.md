@@ -29,8 +29,8 @@ CONDITIONS OF ACCEPTANCE are matched.
  + if user has no views at all in given year his profile should not be in that years report
 
  - users with same name - how to differentiate them?
- - larger number of views might break display of table
- - large number of profiles and/or years makes it slow and hard to read in console
+ - larger number of view count might break display of table
+ - large number of profiles and/or years makes it slow to generate and hard to read in console
 
 ### Possible Improvements (estimations in hours,  1 hour as minimum)
  + add user id to the name if there are users with same profile name (1)
