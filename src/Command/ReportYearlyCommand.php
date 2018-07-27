@@ -4,11 +4,7 @@ namespace BOF\Command;
 
 use BOF\Command\Renderer\RendererFactory;
 use Doctrine\DBAL\Driver\Connection;
-use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Helper\TableStyle;
-use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -32,14 +28,18 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $db = $this->getContainer()->get('database_connection');
 
         $reportData = $this->collectData($db);
-
-        $renderer = RendererFactory::makeRenderer(RendererFactory::RENDERER_TABLE, $output);
-        $renderer->render($reportData);
+        $this->render($output, $reportData);
 
         $event = $stopwatch->stop('execution');
         $io->writeln(sprintf("execution time: %s ms", $event->getDuration()));
         $io->writeln(sprintf("consumed memory: %s MB", round(memory_get_peak_usage() / (1024 * 1024), 2)));
 
+    }
+
+    private function render($output, $reportData)
+    {
+        $renderer = RendererFactory::makeRenderer(RendererFactory::RENDERER_TABLE, $output);
+        $renderer->render($reportData);
     }
 
     private function collectData($db)
