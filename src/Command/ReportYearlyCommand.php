@@ -9,7 +9,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ReportYearlyCommand extends ContainerAwareCommand
 {
@@ -40,10 +39,6 @@ class ReportYearlyCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var $db Connection */
-        $io = new SymfonyStyle($input,$output);
-        $db = $this->getContainer()->get('database_connection');
-
         $year = $input->getArgument(self::ARG_YEAR);
 
         // set default value for the optional argument
