@@ -65,13 +65,23 @@ class ReportYearlyCommand extends ContainerAwareCommand
             $mappedData[$profileName][$monthNum] = number_format($responseRow['sum_views'], 0);
         }
 
+        // output styling
+        $profileNames = array_keys($mappedData);
+        $tableColumnWidths = array_fill(0, 13, 6);
+        $longestProfileName = count($profileNames)
+            ? max(array_map('strlen', $profileNames))
+            : 0
+        ;
+        $headerYear = str_pad($year, max(9, $longestProfileName - strlen('Profile')), ' ', STR_PAD_LEFT);
+        $headerCol_1 = 'Profile' . $headerYear;
+
         $tableHeader = [
-            'Profile', // @TODO: display year
-            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+            $headerCol_1, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
         ];
 
         $table = new Table($output);
         $table
+            ->setColumnWidths($tableColumnWidths)
             ->setHeaders($tableHeader)
             ->setRows($mappedData)
             ->render()
