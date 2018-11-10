@@ -41,10 +41,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input,$output);
         $db = $this->getContainer()->get('database_connection');
 
-        $profiles = $db->query('SELECT profile_name FROM profiles')->fetchAll();
 
-        // Show data in a table - headers, data
-        $io->table(['Profile'], $profiles);
 
     }
 
