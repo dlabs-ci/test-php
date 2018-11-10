@@ -96,7 +96,13 @@ class ReportYearlyCommand extends ContainerAwareCommand
         ;
     }
 
-    private function validateYear($year)
+    /**
+     * Returns true if the given $year is in valid year format
+     *
+     * @param string $year
+     * @return bool
+     */
+    private function validateYear(string $year)
     {
         return is_numeric($year) && strlen($year) === 4;
     }
