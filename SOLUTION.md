@@ -3,7 +3,7 @@ SOLUTION
 
 Estimation
 ----------
-Estimated: n hours
+Estimated: 4 hours for implementation, 1 hour for documentation, spike for tests
 
 Spent: x hours
 
