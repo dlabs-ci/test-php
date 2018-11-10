@@ -18,7 +18,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
     {
         $this
             ->setName('report:profiles:yearly')
-            ->setDescription('Page views report')
+            ->setDescription('Yearly report of page views by user and month')
             ->addArgument(self::ARG_YEAR, InputArgument::OPTIONAL,
                 "The 4-digit year for which to generate the report.\n"
                 . " If not provided, the report will be generated for the current year.")
