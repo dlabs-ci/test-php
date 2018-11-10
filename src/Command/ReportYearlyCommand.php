@@ -54,15 +54,15 @@ class ReportYearlyCommand extends ContainerAwareCommand
         /** @var array */
         $queryResponse = $stmt->fetchAll();
 
-        $result = [ ];
+        $mappedData = [ ];
 
         // map resultset in a single pass
         foreach ($queryResponse as $responseRow) {
             $profileName = $responseRow['profile_name'];
             $monthNum = $responseRow['month_num'];
 
-            $result[$profileName][0] = $profileName;
-            $result[$profileName][$monthNum] = $responseRow['sum_views'];
+            $mappedData[$profileName][0] = $profileName;
+            $mappedData[$profileName][$monthNum] = number_format($responseRow['sum_views'], 0);
         }
 
         $tableHeader = [
@@ -73,7 +73,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $table = new Table($output);
         $table
             ->setHeaders($tableHeader)
-            ->setRows($result)
+            ->setRows($mappedData)
             ->render()
         ;
     }
