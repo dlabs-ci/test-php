@@ -8,3 +8,7 @@ services:
         class: BOF\Command\ReportYearlyCommand
         tags:
             - { name: console.command }
+
+    app.data_provider.views:
+        class: BOF\Service\DataProvider\ViewsProvider
+        arguments: ['@database_connection']

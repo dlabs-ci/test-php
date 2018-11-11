@@ -46,23 +46,18 @@ class ReportYearlyCommand extends ContainerAwareCommand
             $year = date('Y');
         }
 
-        /** @var PDOStatement */
-        $stmt = $this->getSqlStatement();
-        $stmt->bindParam('year', $year);
-        $stmt->execute();
-
         /** @var array */
-        $queryResponse = $stmt->fetchAll();
+        $viewsData = $this->getContainer()->get('app.data_provider.views')->getSumViewsPerProfile($year);
 
         $mappedData = [ ];
 
-        // map resultset in a single pass
-        foreach ($queryResponse as $responseRow) {
-            $profileName = $responseRow['profile_name'];
-            $monthNum = $responseRow['month_num'];
+        // map dataset in a single pass
+        foreach ($viewsData as $dataRow) {
+            $profileName = $dataRow['profile_name'];
+            $monthNum = $dataRow['month_num'];
 
             $mappedData[$profileName][0] = $profileName;
-            $mappedData[$profileName][$monthNum] = number_format($responseRow['sum_views'], 0);
+            $mappedData[$profileName][$monthNum] = number_format($dataRow['sum_views'], 0);
         }
 
         // output styling
@@ -97,31 +92,5 @@ class ReportYearlyCommand extends ContainerAwareCommand
     private function validateYear(string $year)
     {
         return is_numeric($year) && strlen($year) === 4;
-    }
-
-    /**
-     * Returns a prepared SQL statement for the yearly report
-     *
-     * @return PDOStatement
-     */
-    private function getSqlStatement()
-    {
-        /** @var $db Connection */
-        $db = $this->getContainer()->get('database_connection');
-
-        $sql =
-           'SELECT
-                p.profile_id,
-                p.profile_name,
-                MONTH(v.`date`) AS month_num,
-                SUM(v.views) AS sum_views
-            FROM profiles p
-            LEFT OUTER JOIN views v ON p.profile_id = v.profile_id
-            WHERE YEAR(v.`date`) = :year
-            GROUP BY p.profile_id, month_num
-            ORDER BY p.profile_name, month_num'
-        ;
-
-        return $db->prepare($sql);
     }
 }
