@@ -75,6 +75,12 @@ class ReportYearlyCommand extends ContainerAwareCommand
             $mappedData[$profileName][$monthNum] = number_format($dataRow['sum_views'], 0);
         }
 
+        // fill blanks in mapped data
+        $replacementTemplate = array_merge([''], array_fill(1, 12, 'n/a'));
+        foreach ($mappedData as &$mappedDataRow) {
+            $mappedDataRow = array_replace($replacementTemplate, $mappedDataRow); ;
+        }
+
         // drop an empty line for better readability
         $io->writeln('');
         // output styling
