@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ReportYearlyCommand extends ContainerAwareCommand
 {
@@ -39,6 +40,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
         $year = $input->getArgument(self::ARG_YEAR);
 
         // set default value for the optional argument
@@ -49,6 +51,13 @@ class ReportYearlyCommand extends ContainerAwareCommand
         /** @var array */
         $viewsData = $this->getContainer()->get('app.data_provider.views')->getSumViewsPerProfile($year);
 
+        // if nothing found, output a message and exit
+        if (!count($viewsData)) {
+            $io->writeln("No data was found for the year $year.");
+            return true;
+        }
+
+        // otherwise, map the resulting data
         $mappedData = [ ];
 
         // map dataset in a single pass
@@ -60,6 +69,8 @@ class ReportYearlyCommand extends ContainerAwareCommand
             $mappedData[$profileName][$monthNum] = number_format($dataRow['sum_views'], 0);
         }
 
+        // drop an empty line for better readability
+        $io->writeln('');
         // output styling
         $profileNames = array_keys($mappedData);
         $tableColumnWidths = array_fill(0, 13, 6);
