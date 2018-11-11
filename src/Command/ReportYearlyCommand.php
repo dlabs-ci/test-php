@@ -2,8 +2,6 @@
 
 namespace BOF\Command;
 
-use Doctrine\DBAL\Driver\Connection;
-use Doctrine\DBAL\Driver\PDOStatement;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
