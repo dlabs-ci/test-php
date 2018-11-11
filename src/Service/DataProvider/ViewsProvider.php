@@ -29,7 +29,7 @@ class ViewsProvider
         $where = '1';
 
         if (!is_null($year)) {
-            $where = 'YEAR(v.`date`) = :year';
+            $where = 'v.`year` = :year';
         }
 
         // build SQL
@@ -37,7 +37,7 @@ class ViewsProvider
            "SELECT
                 p.profile_id,
                 p.profile_name,
-                MONTH(v.`date`) AS month_num,
+                v.`month` AS month_num,
                 SUM(v.views) AS sum_views
             FROM profiles p
             LEFT OUTER JOIN views v ON p.profile_id = v.profile_id

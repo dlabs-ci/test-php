@@ -18,7 +18,18 @@ DROP TABLE IF EXISTS `bof_test`.`views`;
 CREATE TABLE `bof_test`.`views` (
 `profile_id` INT NOT NULL ,
 `date` DATE NOT NULL ,
-`views` INT NOT NULL
+`month` INT NOT NULL,
+`year` INT NOT NULL,
+`views` INT NOT NULL,
+INDEX `idx_profile_id` (`profile_id`),
+INDEX `idx_month` (`month`),
+INDEX `idx_year` (`year`)
 ) ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+CREATE TRIGGER `bof_test`.`set_month_year` BEFORE INSERT ON `bof_test`.`views`
+FOR EACH ROW SET
+    NEW.`month` = MONTH(NEW.`date`),
+    NEW.`year` = YEAR(NEW.`date`)
+;
 
 INSERT INTO `bof_test`.`profiles` VALUES(1, 'Karl Lagerfeld'), (2, 'Anna Wintour'), (3, 'Tom Ford'), (4, 'Pierre Alexis Dumas'), (5, 'Sandra Choi');
