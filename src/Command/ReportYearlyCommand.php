@@ -11,6 +11,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * Class ReportYearlyCommand
+ * Generates yearly reports.
+ *
+ * @package BOF\Command
+ */
 class ReportYearlyCommand extends ContainerAwareCommand
 {
     const ARG_YEAR = 'year';
