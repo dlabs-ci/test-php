@@ -16,7 +16,7 @@ Added functionality to specify year by command line.
 
 Future ideas
 ------------
-What could be done better:
+What could have been done better:
 - Using Doctrine ORM with entities and native Doctrine repositories
 - ProfilesRepository could return []Profile
 - Private methods ReportYearlyCommand::pivotData and ReportYearlyCommand::fillEmpty could be set public static and moved to separate utils if needed. Personally I did not find it necessary because there would be too many parameters passed and would make code less readable for single use case
