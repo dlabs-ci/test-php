@@ -13,6 +13,16 @@ Solution
 ReportYearlyCommand exposes command for yearly report of views per profile.
 Added functionality to specify year by command line.
 
+Added PRIMARY KEY and auto_increment to profiles.profile_id and FOREIGN KEY to views.profile_id. Additional SQL needed:
+
+``` SQL
+ALTER TABLE profiles ADD PRIMARY KEY (profile_id);
+ALTER TABLE profiles MODIFY profile_id int(11) NOT NULL auto_increment;
+ALTER TABLE views
+ADD CONSTRAINT views_profiles_profile_id_fk
+FOREIGN KEY (profile_id) REFERENCES profiles (profile_id);
+```
+
 
 Future ideas
 ------------
