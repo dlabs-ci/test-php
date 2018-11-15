@@ -3,7 +3,7 @@ SOLUTION
 
 Estimation
 ----------
-Estimated: 7 hours
+Estimated: 6 hours
 
 Spent: 7 hours
 
