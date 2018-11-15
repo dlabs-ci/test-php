@@ -14,7 +14,7 @@ use Doctrine\DBAL\Driver\Connection;
 class ProfilesRepository {
 
     /**
-     * A database connection.
+     * A database connection.e
      * @var Connection
      */
     private $db;

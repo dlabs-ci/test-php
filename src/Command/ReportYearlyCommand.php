@@ -43,7 +43,8 @@ class ReportYearlyCommand extends ContainerAwareCommand
                 'min_range' => 1900
             ]
         ])) {
-            throw new InvalidArgumentException('Year should be numeric and greater than ' . self::MIN_YEAR);
+            $io->error('Year should be numeric and greater than ' . self::MIN_YEAR);
+            return;
         }
 
         /** @var ProfilesRepository $profilesRepository */
