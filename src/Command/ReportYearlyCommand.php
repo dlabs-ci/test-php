@@ -3,8 +3,9 @@
 namespace BOF\Command;
 
 use BOF\Repository\ProfilesRepository;
-use Doctrine\DBAL\Driver\Connection;
 use InvalidArgumentException;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableStyle;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,7 +35,6 @@ class ReportYearlyCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var $db Connection */
         $io = new SymfonyStyle($input, $output);
 
         $year = $input->getArgument('year');
@@ -55,19 +55,33 @@ class ReportYearlyCommand extends ContainerAwareCommand
             return;
         }
 
-        // pivot DB data
+        // Pivot DB data
         $profilesPivot = $this->pivotData($profiles);
 
-        // sort profiles by name
+        // Fill non-existent values
+        $this->fillEmpty($profilesPivot);
+
+        // Sort profiles by name
         usort($profilesPivot, function ($a, $b)
         {
             return strcmp($a[0], $b[0]);
         });
 
+        // using Table with TableStyle to make values right aligned
+        $rightAligned = new TableStyle();
+        $rightAligned->setPadType(STR_PAD_LEFT);
+
+        $table = new Table($output);
+        for ($i = 1; $i < count(self::MONTH_NAMES) + 1; $i++) {
+            $table->setColumnStyle($i, $rightAligned);
+        }
+
+        // Display title
         $io->title('Yearly report for year ' . $year);
 
-        // Show data in a table - headers, data
-        $io->table(array_merge(['Profile'], self::MONTH_NAMES), $profilesPivot);
+        $table->setHeaders(array_merge(['Profile'], self::MONTH_NAMES));
+        $table->setRows($profilesPivot);
+        $table->render();
 
     }
 
@@ -77,24 +91,32 @@ class ReportYearlyCommand extends ContainerAwareCommand
      * @param $profiles array array of profiles
      * @return array DB data
      */
-    private function pivotData($profiles): array
+    private function pivotData(array $profiles): array
     {
         $profilesPivot = [];
         foreach ($profiles as $profile) {
             $profilesPivot[$profile['profile_id']][0] = $profile['profile_name'];
             $profilesPivot[$profile['profile_id']][$profile['month']] = number_format($profile['sum_views']);
         }
+        return $profilesPivot;
+    }
 
-        foreach ($profilesPivot as &$profilePivot) {
+    /**
+     * Fills empty values with 'n/a' when there is no monthly data available
+     *
+     * @param array $data array which will be checked for empty values
+     */
+    private function fillEmpty(array &$data)
+    {
+        foreach ($data as &$d) {
             for ($i = 1; $i < count(self::MONTH_NAMES) + 1; $i++) {
-                if (!isset($profilePivot[$i])) {
-                    $profilePivot[$i] = self::NOT_AVAILABLE;
+                if (!isset($d[$i])) {
+                    $d[$i] = self::NOT_AVAILABLE;
                 }
             }
-            // make sure that array elements are at correct places
-            // (actually, converts a map to array and preserves correct array positions)
-            ksort($profilePivot);
+            // Make sure that array elements are at correct places
+            // (actually, converts a map to an array and preserves correct array positions)
+            ksort($d);
         }
-        return $profilesPivot;
     }
 }

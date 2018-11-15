@@ -3,21 +3,27 @@ SOLUTION
 
 Estimation
 ----------
-Estimated: 6 hours
+Estimated: 7 hours
 
 Spent: x hours
 
 
 Solution
 --------
-Comments on your solution
+ReportYearlyCommand exposes command for yearly report of views per profile.
+Added functionality to specify year by command line.
 
+
+Future ideas
+------------
 What could be done better:
-- using Doctrine ORM with entities and native repositories
+- Using Doctrine ORM with entities and native Doctrine repositories
 - ProfilesRepository could return []Profile
-- used code standard from original code
+- Private methods ReportYearlyCommand::pivotData and ReportYearlyCommand::fillEmpty could be set public static and moved to separate utils if needed. Personally I did not find it necessary because there would be too many parameters passed and would make code less readable for single use case
 
-Possible test cases:
+
+Possible test cases
+-------------------
 - No year passed but no error is shown
 - Year is of invalid type but no error is shown
 - No historical data but no error is shown
