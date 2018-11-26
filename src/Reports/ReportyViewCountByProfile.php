@@ -6,29 +6,28 @@ class ReportyViewCountByProfile
 
     public function __construct()
     {
-        return $this;
     }
 
     public function getByYear($arg_year)
     {
         $profiles = ("SELECT pr.profile_name, count(vi.views) sum ,
-        count(case when month(vi.date) = '1' then (vi.views) end) as Jan,
-        count(case when month(vi.date) = '2' then (vi.views) end) as 'Feb',
-        count(case when month(vi.date) = '3' then (vi.views) end) as 'Mar',
-        count(case when month(vi.date) = '4' then (vi.views) end) as 'Apr',
-        count(case when month(vi.date) = '5' then (vi.views) end) as 'May',
-        count(case when month(vi.date) = '6' then (vi.views) end) as 'Jun',
-        count(case when month(vi.date) = '7' then (vi.views) end) as 'Jul',
-        count(case when month(vi.date) = '8' then (vi.views) end) as 'Avg',
-        count(case when month(vi.date) = '9' then (vi.views) end) as 'Sep',
-        count(case when month(vi.date) = '10' then (vi.views) end) as 'Oct',
-        count(case when month(vi.date) = '11' then (vi.views) end) as 'Nov',
-        count(case when month(vi.date) = '12' then (vi.views) end) as 'Dec'
-            from profiles pr
-        left outer join views vi on pr.profile_id = vi.profile_id
-        where year(vi.date) = $arg_year
-        group by vi.profile_id, year(vi.date)
-        order by pr.profile_name");
+                        COUNT(CASE WHEN MONTH(vi.date) = '1' THEN  (vi.views) END) as Jan,
+                        COUNT(CASE WHEN MONTH(vi.date) = '2' THEN  (vi.views) END) as 'Feb',
+                        COUNT(CASE WHEN MONTH(vi.date) = '3' THEN  (vi.views) END) as 'Mar',
+                        COUNT(CASE WHEN MONTH(vi.date) = '4' THEN  (vi.views) END) as 'Apr',
+                        COUNT(CASE WHEN MONTH(vi.date) = '5' THEN  (vi.views) END) as 'May',
+                        COUNT(CASE WHEN MONTH(vi.date) = '6' THEN  (vi.views) END) as 'Jun',
+                        COUNT(CASE WHEN MONTH(vi.date) = '7' THEN  (vi.views) END) as 'Jul',
+                        COUNT(CASE WHEN MONTH(vi.date) = '8' THEN  (vi.views) END) as 'Avg',
+                        COUNT(CASE WHEN MONTH(vi.date) = '9' THEN  (vi.views) END) as 'Sep',
+                        COUNT(CASE WHEN MONTH(vi.date) = '10' THEN  (vi.views) END) as 'Oct',
+                        COUNT(CASE WHEN MONTH(vi.date) = '11' THEN  (vi.views) END) as 'Nov',
+                        COUNT(CASE WHEN MONTH(vi.date) = '12' THEN  (vi.views) END) as 'Dec'
+                    FROM profiles pr
+                        LEFT JOIN views vi on pr.profile_id = vi.profile_id
+                    WHERE year(vi.date) = $arg_year
+                    GROUP BY vi.profile_id, year(vi.date)
+                    ORDER BY pr.profile_name");
 
         return $profiles;
     }
