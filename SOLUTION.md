@@ -16,7 +16,7 @@ After reading the Symfony Docs I'm prety sure that I should create a Service cla
 Of course each report has to have it's own class with this strategy we avoid sphageti code and if we seperate our code there is a lot more 
 opportunity for code reuse. Me not using ORM was a decision by-design because I don't think that ORM is a good fit for reports&analytics - for performance reasons and query maintenance reasons the plan-sql is the right way to go. ORM is a good fit for basic CRUD actions.
 
-In my opinion, a more suitable (production ready) solution would be to build a RESTFull API for fetching report data. The service would accept input arguments and returned a structured JSON response object. But given that this is not a production code and you don't need to spend time on the presentational part of the app (view) it is a good fit. With API calls we can more easly incoporate user authentication strategies, auditing, scaling, ... .
+In my opinion, a more suitable (production ready) solution would be to build a RESTFull API for fetching report data. The service would accept input arguments and returned a structured JSON response object. But given that this is not a production code and you don't need to spend time on the presentational part of the app (view) it is a good fit. With API calls we can more easly incorporate user authentication strategies, auditing, scaling, ... .
 
 
 Test cases : 
