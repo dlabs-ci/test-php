@@ -46,7 +46,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
             }
 
             // Show data in a table - headers, data
-            $io->table(['Profile ' . $year_argument,
+            $io->table(['Profile ' . str_replace("'", "", $year_argument), 
                 'Sum', 'Jan', 'Feb',
                 'Mar', 'Apr', 'May',
                 'Jun', 'Jul', 'Avg',
