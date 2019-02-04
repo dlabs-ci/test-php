@@ -31,6 +31,7 @@ class TestDataResetCommand extends ContainerAwareCommand
         $profiles = $db->query('SELECT * FROM profiles')->fetchAll();
 
         $progress = $io->createProgressBar(count($profiles));
+
         foreach ($profiles as $profile) {
 
             $profileId = $profile['profile_id'];
@@ -38,24 +39,33 @@ class TestDataResetCommand extends ContainerAwareCommand
 
             while ($currentDate <= $endDate) {
 
-                for ($i = 0; $i <= $dataPerDay; $i++) {
+                for ($i = 0; $i <= $dataPerDay; $i++) {             
 
                     $views = rand(100, 9999);
                     $date = date('Y-m-d', $currentDate);
 
-                    $sql = sprintf(
-                        "INSERT INTO views (`profile_id`, `date`, `views`) VALUES (%s, '%s', %s)",
-                        $profileId,
-                        $date,
-                        $views
-                    );
-                    $db->query($sql);
-                }
+                    $insert[] = [
+                        'profile_id' => $profileId,
+                        'date' => $date,
+                        'views' => $views
+                    ];  
 
+                }
                 $currentDate = mktime(0,0,0, date('m', $currentDate), date('d', $currentDate) + 1, date('Y', $currentDate));
             }
             $progress->advance();
         }
 
+        foreach($insert as $i){
+            $inserted[] = '('.$i['profile_id'].', '."'".$i['date']."'".', '.$i['views'].')';
+        }
+
+        $sql = " INSERT INTO views (`profile_id`, `date`, `views`) VALUES " . implode(',', $inserted);
+
+        //print_r($sql);
+        
+        $db->query($sql);
+
     }
+
 }
