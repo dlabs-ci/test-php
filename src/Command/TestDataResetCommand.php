@@ -57,14 +57,14 @@ class TestDataResetCommand extends ContainerAwareCommand
         }
 
         foreach($insert as $i){
-            $inserted[] = '('.$i['profile_id'].', '.$i['date'].', '.$i['views'].')';
+            $inserted[] = '('.$i['profile_id'].', '."'".$i['date']."'".', '.$i['views'].')';
         }
 
         $sql = " INSERT INTO views (`profile_id`, `date`, `views`) VALUES " . implode(',', $inserted);
 
-        print_r($sql);
+        //print_r($sql);
         
-        //$db->query($sql);
+        $db->query($sql);
 
     }
 
