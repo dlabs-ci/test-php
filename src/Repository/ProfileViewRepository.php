@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProfileViewRepository extends ServiceEntityRepository
 {
-
     private $validator;
     private $query;
     private $errors = [];
@@ -42,6 +41,7 @@ class ProfileViewRepository extends ServiceEntityRepository
                 $this->addYearQuery($param);
             }
         }
+
         return $this->query->getQuery()->getResult();
     }
 
@@ -53,6 +53,7 @@ class ProfileViewRepository extends ServiceEntityRepository
                 $this->validateYear($param);
             }
         }
+
         return count($this->errors) ? false : true;
     }
 
@@ -61,32 +62,18 @@ class ProfileViewRepository extends ServiceEntityRepository
         return $this->errors;
     }
 
-//    public function findByYear($value)
-//    {
-//        $start = $value . '-01-01';
-//        $end = $value . '-12-12';
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.date BETWEEN :startDate and :endDate')
-//            ->setParameter('startDate', $start)
-//            ->setParameter('endDate', $end)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
     private function addYearQuery($param)
     {
-        $start = $param . '-01-01';
-        $end = $param . '-12-12';
+        $start = $param.'-01-01';
+        $end = $param.'-12-12';
         $this->query->andWhere('t.date BETWEEN :startDate and :endDate')
             ->setParameter('startDate', $start)
             ->setParameter('endDate', $end);
     }
 
-
     private function validateYear($val)
     {
-        $currentYear =  date("Y");
+        $currentYear = date('Y');
         $violations = $this->validator->validate($val, [
             new Range(['min' => 2000, 'max' => $currentYear]),
             new NotBlank(),
@@ -94,7 +81,7 @@ class ProfileViewRepository extends ServiceEntityRepository
         if ($violations) {
             /** @var ConstraintViolation $error */
             foreach ($violations as $error) {
-                $this->errors []= $error->getMessage();
+                $this->errors [] = $error->getMessage();
             }
         }
     }

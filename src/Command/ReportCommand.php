@@ -1,5 +1,6 @@
 <?php
 
+
 namespace BOF\Command;
 
 use BOF\Repository\ProfileRepository;
@@ -20,8 +21,8 @@ class ReportCommand extends Command
 
     public function __construct(ProfileViewRepository $profileViewRepository, ProfileRepository $profileRepository)
     {
-        $this->profileRepository    = $profileRepository;
-        $this->profileViewRepository= $profileViewRepository;
+        $this->profileRepository = $profileRepository;
+        $this->profileViewRepository = $profileViewRepository;
         parent::__construct();
     }
 
@@ -31,7 +32,6 @@ class ReportCommand extends Command
             ->setDescription('generate report.')
             ->addArgument('year', InputArgument::REQUIRED, 'Set valid year')
             ->setHelp('This command allows you to generate a report...')
-
         ;
     }
 

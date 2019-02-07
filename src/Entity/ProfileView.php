@@ -78,17 +78,5 @@ class ProfileView
     public function getMonth(): ?string
     {
         return date("j", strtotime($this->date));
-//        $formatter = new IntlDateFormatter(
-//            'en',
-//            IntlDateFormatter::FULL,
-//            IntlDateFormatter::FULL
-//        );
-//        $tt = date("m", strtotime('2016-05-17 16:41:51'));
-//        echo '<pre>';
-//        print_r($tt);
-//        die();
-//        $formatter->setPattern('m');
-//        return $formatter->format($this->date);
     }
-
 }

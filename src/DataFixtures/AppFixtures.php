@@ -9,7 +9,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-
     public $profiles;
     public $io;
 
@@ -26,7 +25,7 @@ class AppFixtures extends Fixture
 
             $currentDate = $startDate;
             while ($currentDate <= $endDate) {
-                for ($i = 0; $i <= $dataPerDay; $i++) {
+                for ($i = 0; $i <= $dataPerDay; ++$i) {
                     $date = date('Y-m-d', $currentDate);
                     $model = new ProfileView();
                     $model->setProfileId($profileId);

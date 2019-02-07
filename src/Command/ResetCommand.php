@@ -1,4 +1,5 @@
 <?php
+
 namespace BOF\Command;
 
 use BOF\DataFixtures\AppFixtures;
@@ -17,8 +18,8 @@ class ResetCommand extends Command
 
     public function __construct(ProfileRepository $profileRepository, ObjectManager $objectManager)
     {
-        $this->profileRepository    = $profileRepository;
-        $this->objectManager        = $objectManager;
+        $this->profileRepository = $profileRepository;
+        $this->objectManager = $objectManager;
         parent::__construct();
     }
 

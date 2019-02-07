@@ -20,8 +20,8 @@ Class Report
     public function __construct(ProfileViewRepository $profileViewRepository,
                                 ProfileRepository $profileRepository, $reportType)
     {
-        $this->profileRepository    = $profileRepository;
-        $this->profileViewRepository= $profileViewRepository;
+        $this->profileRepository = $profileRepository;
+        $this->profileViewRepository = $profileViewRepository;
         $this->reportType = $reportType;
     }
 
@@ -34,12 +34,14 @@ Class Report
         } else {
             $this->response['data'] = $this->getResults($queryArguments);
         }
+
         return $this->response;
     }
 
     private function getResults($queryArguments)
     {
         $rows = $this->profileViewRepository->search($queryArguments);
+
         return $this->mapRows($rows);
     }
 
@@ -51,7 +53,7 @@ Class Report
         foreach ($rows as $viewDay) {
             if (!isset($queryRes[$viewDay->getProfileId()][$viewDay->getMonth()])) {
                 $queryRes[$viewDay->getProfileId()][$viewDay->getMonth()] = 0;
-                $users []= $viewDay->getProfileId();
+                $users [] = $viewDay->getProfileId();
             }
             $queryRes[$viewDay->getProfileId()][$viewDay->getMonth()] += $viewDay->getViews();
         }
@@ -61,13 +63,13 @@ Class Report
         foreach (array_unique($users) as $user) {
             $profileName = $this->profileRepository->find($user)->getName();
             $userArr = [$profileName];
-           // $res[$user] []= $profileName;
             foreach (ReportHelper::$months as $key => $month) {
-                $userArr []= isset($queryRes[$user][$key]) ? $queryRes[$user][$key] : 'N/A';
+                $userArr [] = isset($queryRes[$user][$key]) ? $queryRes[$user][$key] : 'N/A';
             }
-            $res []= $userArr;
+            $res [] = $userArr;
         }
         ksort($res);
+
         return $res;
     }
 
