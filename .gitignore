@@ -6,4 +6,6 @@ vendor
 *.rdb
 .idea
 .localized
+/var
 .vscode
+/.web-server-pid
