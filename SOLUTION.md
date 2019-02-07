@@ -3,13 +3,12 @@ SOLUTION
 Before I've started the assignment, I discovered that the assignment has a serious vulnerability. In the process of an assignment's delivery, a candidate have to fork the code from the public repository.  The number of forks is displayed in the main repository. 
 When you click on the button with the number of forks, you can go to the public repositories of the previous candidates who performed this task.
 
-Thus, after clicking, I saw 17 repositories, and some of them contained solutions for this assignment.
+Thus, after clicking, I saw 17 repositories, and some of them contained solutions for this assignment. Please take a look
+https://github.com/dlabs-ci/test-php/network/members
 
-Мulnerability itself does not reveal the level of technical expertise of the candidate but can give him good tips
-
+Vulnerability itself does not reveal the level of technical expertise of the candidate but can give him good tips
 
 Considering the discovered vulnerability I have decided to rewrite this assignment from scratch.
-
 
 What was done.
 1. Symfony was reinstalled from  symfony/skeleton repository
@@ -26,23 +25,5 @@ Time Estimate:
 1 - 2 days
 Before I've started, I had no experience with Symfony and Doctrine, and I wanted to solve the problem using this particular environment. 
 
-Time Spent: 14 hour
-Estimation
-----------
-Estimated: n hours
-
-Spent: x hours
-
-
-Solution
---------
-
-*created app from scratch 
-*add packages - ORM, migrations, entity-maker, validator, fixtures,
-*used migrations to modify database, add PK and indexes
-*used entities for profile and profile_views
-*Repository to get required data, add custom search and custom validation to profileView repository
-*created report service which receives query params and report type
-
-
-Comments on your solution
+Time Spent: 
+14 hours
