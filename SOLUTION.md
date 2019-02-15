@@ -10,4 +10,4 @@ Spent: 2 hours
 
 Solution
 --------
-Comments on your solution
+In order to come with a better solution, I will probably build a web application with good UI and more tools the end user can use to generate reports. Like for example filters for the data and export in different formats.
