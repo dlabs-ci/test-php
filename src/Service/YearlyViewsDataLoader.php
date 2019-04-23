@@ -34,7 +34,9 @@ class YearlyViewsDataLoader extends ViewsDataLoader
 		return $this->db
 			->query("
 				select 
-					p.profile_name, sum(v.views), month(v.date) from profiles p
+					p.profile_name,
+					{$this->caseMonths()}
+					from profiles p
 				left join 
 					views v
 				on 
@@ -42,10 +44,26 @@ class YearlyViewsDataLoader extends ViewsDataLoader
 				where 
 					YEAR(v.date) = {$this->getYear()}
 				group by 
-					(v.profile_id), MONTH(date)
+					v.profile_id
 				order 
 					by p.profile_name
 			");
+	}
+
+	/**
+	 * Case views months so the groups are displayed horizontally
+	 * 
+	 * @return string
+	 */
+	protected function caseMonths()
+	{
+		$months = '';
+
+		foreach(range(1,12) as $month) {
+			$months.= "sum(CASE WHEN month(v.date) = {$month} THEN v.views END) AS month_{$month}, ";
+		}
+
+		return rtrim($months,', ');
 	}
 
 	/**
