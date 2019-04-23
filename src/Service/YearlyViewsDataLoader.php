@@ -72,7 +72,7 @@ class YearlyViewsDataLoader extends ViewsDataLoader
 	 * @param int $year
 	 * @return this
 	 */
-	public function setYear($year)
+	public function setYear(int $year)
 	{
 		$this->year = $year;
 
