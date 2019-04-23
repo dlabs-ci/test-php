@@ -20,4 +20,14 @@ abstract class ViewsDataRenderer
 			return $value ?? 'n/a';
 		}, $row);
 	}
+
+	/**
+	 * Return header array
+	 * 
+	 * @return array
+	 */
+	protected function getHeader()
+	{
+		return ['Profiles', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'];
+	}
 }

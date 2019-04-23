@@ -37,11 +37,11 @@ class ReportYearlyCommand extends ContainerAwareCommand
          */
         $dataLoader = new YearlyViewsDataLoader($db);
 
-        $profilesData = $dataLoader
+        $profilesVIews = $dataLoader
                     ->setYear($input->getArgument('year')[0])
                     ->load();
 
         $renderer = new ConsoleViewsDataRenderer;
-        $renderer->render($io,$profilesData);
+        $renderer->render($io, $profilesVIews);
     }
 }

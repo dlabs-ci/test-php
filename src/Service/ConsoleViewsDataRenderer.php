@@ -21,7 +21,7 @@ class ConsoleViewsDataRenderer extends ViewsDataRenderer
 
         $table = new Table($io);
         $table
-            ->setHeaders(['Profiles', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'])
+            ->setHeaders($this->getHeader())
         ;
         
         foreach($viewsData as $viewData) 
