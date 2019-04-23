@@ -2,6 +2,8 @@
 namespace BOF\Command;
 
 use Doctrine\DBAL\Driver\Connection;
+use BOF\Service\YearlyViewsDataLoader;
+use BOF\Service\ConsoleViewsDataRenderer;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -14,7 +16,8 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $this
             ->setName('report:profiles:yearly')
             ->setDescription('Page views report')
-        ;
+            ->addArgument('year', InputOption::VALUE_OPTIONAL, 'Year for which the data will be generated.')
+            ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -23,10 +26,23 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input,$output);
         $db = $this->getContainer()->get('database_connection');
 
-        $profiles = $db->query('SELECT profile_name FROM profiles')->fetchAll();
+        /**
+         * Ideally the classes used below could be injected 
+         * in a constructor or as a method argument.
+         */
+        $dataLoader = new YearlyViewsDataLoader($db);
 
-        // Show data in a table - headers, data
-        $io->table(['Profile'], $profiles);
+        $profilesVIews = $dataLoader
+                    ->setYear($input->getArgument('year')[0])
+                    ->load();
 
+        $header = ['Profiles ' . $dataLoader->getYear(),
+                    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep','Oct','Nov','Dec'];
+
+        $renderer = new ConsoleViewsDataRenderer;
+        $renderer
+            ->setHeader($header)
+            ->render($io, $profilesVIews);
     }
 }
