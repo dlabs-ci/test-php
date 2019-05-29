@@ -5,7 +5,7 @@ Estimation
 ----------
 Estimated: 2 hours
 
-Spent:  hours
+Spent: 2 hours
 
 
 Solution
