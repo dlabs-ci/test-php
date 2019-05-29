@@ -30,10 +30,10 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $header = $this->getHeader($year);
 
         //Call to function that gets data for the table
-        $profiles = $this->getDataForTable($header);
+        $profiles = $this->getDataForTable($header['header'], $header['year']);
 
         // Show data in a table - headers, data
-        $io->table($header, $profiles);
+        $io->table($header['header'], $profiles);
 
     }
 
@@ -65,12 +65,12 @@ class ReportYearlyCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             die("Error has occured". $e->getMessage());
         }
-        return $header_arr;
+        return ['header' => $header_arr, 'year' => $year];
     }
 
 
     //Function that generates table data depending on the header
-    protected function getDataForTable($headers)
+    protected function getDataForTable($headers, $year)
     {
         $db = $this->getContainer()->get('database_connection');
 
@@ -88,12 +88,12 @@ class ReportYearlyCommand extends ContainerAwareCommand
             foreach ($headers as $header) {
 
                 //skip the first value in the array
-                if ($header == 'Profile') {
+                if (strstr($header, 'Profile')) {
                     continue;
                 }
 
                 //Format date value into something that can be used in mysql
-                $date = date('y-m-d', strtotime($header));
+                $date = date('Y-m-d', strtotime($year.' '.$header));
 
                 // for each profile fill it up with views for that month
                 foreach ($profiles_arr as $key => $profile) {
