@@ -3,11 +3,14 @@ SOLUTION
 
 Estimation
 ----------
-Estimated: n hours
+Estimated: 4 hours
 
-Spent: x hours
+Spent: 4.5 hours
 
 
 Solution
 --------
-Comments on your solution
+Najbrž bi bilo smiselno predelati leto v wildcard, ki bi dopuščal izpis vseh profilov po letih. - 2 uri
+Možnost opcijskega filtra(sortiranje po določenem polju(leto, največ ogledov) asc/dec) - 4 ure
+
+
