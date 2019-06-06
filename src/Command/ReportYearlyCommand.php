@@ -6,6 +6,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use BOF\Profile\Report;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
 
 class ReportYearlyCommand extends ContainerAwareCommand
 {
@@ -14,6 +17,11 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $this
             ->setName('report:profiles:yearly')
             ->setDescription('Page views report')
+            ->setDefinition(
+                new InputDefinition([
+                    new InputOption('year', 'y', InputOption::VALUE_OPTIONAL),
+                ])
+            );
         ;
     }
 
@@ -23,10 +31,16 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $io = new SymfonyStyle($input,$output);
         $db = $this->getContainer()->get('database_connection');
 
-        $profiles = $db->query('SELECT profile_name FROM profiles')->fetchAll();
+        $report = new Report($db);
 
-        // Show data in a table - headers, data
-        $io->table(['Profile'], $profiles);
-
+        if (!$report->setYear($input->getOption("year"))) {
+            $io->writeln("Year must be a valid integer.");
+            return false;
+        }
+       
+        if (!$report->setProfileViews())
+            $io->table("Profile", []);
+       
+        $io->table($report->getHeaders(), $report->getProfiles());
     }
 }
