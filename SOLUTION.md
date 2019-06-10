@@ -15,6 +15,7 @@ Solution
 I should use framework PDO for building sql query. This would avoid any sql injectons.
 Using PDO would allow us to use any other sql database supported by framework and it would make a lot easier to update host or framework.
 If is this a end user application, I would add one simple web form to display data. Estimate would be aprox. 1h.
+I should separete few parts of code into own methods inside class ReportYearlyCommand.
 
 Test scenarios
 --------
