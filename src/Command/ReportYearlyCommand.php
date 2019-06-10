@@ -36,7 +36,11 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $db = $this->getContainer()->get('database_connection');
 
         /* get profiles */
-        $profiles = $db->query('SELECT profile_id, profile_name FROM profiles')->fetchAll();
+        $profiles = $db->query('
+        SELECT profile_id, profile_name 
+        FROM profiles
+        ORDER BY profile_name
+        ')->fetchAll();
         
         /* get view data grouped by monts and profile ids */
         /* TODO: possible sql injection, should escape with framework tools */
