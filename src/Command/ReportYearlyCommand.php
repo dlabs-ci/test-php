@@ -23,6 +23,8 @@ class ReportYearlyCommand extends ContainerAwareCommand
     {
         /* $year argument is required */
         $year = $input->getArgument('year');
+        /* TODO: check if valid year number */
+        
         $months = array();
         for ($month = 1; $month <= 12 ;$month++) {
             $months[$month] = date("M", mktime(0, 0, 0, $month, 10));
