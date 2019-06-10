@@ -2,6 +2,7 @@ SOLUTION
 ========
 I have added primary key to main table profiles, added new column to table views with primary key.
 I have changed src\TestDataResetCommand to get more logic data (one view number per day, per profile). Before it had 4 records for same day and same profile (random numbers).
+fix: setup.sql script. Drop user if exists works only on mysql 5.7+, ref https://dev.mysql.com/doc/refman/5.7/en/drop-user.html, docs 5.6 https://dev.mysql.com/doc/refman/5.6/en/drop-user.html
 
 Estimation
 ----------
