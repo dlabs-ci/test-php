@@ -22,9 +22,12 @@ class ReportYearlyCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /* $year argument is required */
-        $year = $input->getArgument('year');
-        /* TODO: check if valid year number */
-        
+        $year = intval($input->getArgument('year'));
+        /* TODO: better input error handeling */
+        if (strlen($year) != 4) {
+            die("Error! Invalid year number");
+        }
+
         $months = array();
         for ($month = 1; $month <= 12 ;$month++) {
             $months[$month] = date("M", mktime(0, 0, 0, $month, 10));
