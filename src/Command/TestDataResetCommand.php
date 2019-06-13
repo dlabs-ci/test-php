@@ -24,8 +24,6 @@ class TestDataResetCommand extends ContainerAwareCommand
         $startDate = strtotime('2014-09-01');
         $endDate = strtotime('2017-02-11');
 
-        $dataPerDay = 3;
-
         $db->query('TRUNCATE views');
 
         $profiles = $db->query('SELECT * FROM profiles')->fetchAll();
@@ -38,19 +36,16 @@ class TestDataResetCommand extends ContainerAwareCommand
 
             while ($currentDate <= $endDate) {
 
-                for ($i = 0; $i <= $dataPerDay; $i++) {
+                $views = rand(100, 9999);
+                $date = date('Y-m-d', $currentDate);
 
-                    $views = rand(100, 9999);
-                    $date = date('Y-m-d', $currentDate);
-
-                    $sql = sprintf(
-                        "INSERT INTO views (`profile_id`, `date`, `views`) VALUES (%s, '%s', %s)",
-                        $profileId,
-                        $date,
-                        $views
-                    );
-                    $db->query($sql);
-                }
+                $sql = sprintf(
+                    "INSERT INTO views (`profile_id`, `date`, `views`) VALUES (%s, '%s', %s)",
+                    $profileId,
+                    $date,
+                    $views
+                );
+                $db->query($sql);
 
                 $currentDate = mktime(0,0,0, date('m', $currentDate), date('d', $currentDate) + 1, date('Y', $currentDate));
             }
