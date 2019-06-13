@@ -43,7 +43,7 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $yearlyStats = $displayClass->getYearStat($year, true);
 
         $tableHeads = array_merge(array(
-            'Profile'
+            "Profile {$year}"
         ), $displayClass->getMonths()
         );
 
