@@ -1,4 +1,5 @@
 <?php
+
 namespace BOF\Command;
 
 use Doctrine\DBAL\Driver\Connection;
@@ -21,14 +22,13 @@ class ReportYearlyCommand extends ContainerAwareCommand
         $this
             ->setName('report:profiles:yearly')
             ->setDescription('Page views report')
-            ->addArgument('year', InputArgument::REQUIRED, "Show data for year...")
-        ;
+            ->addArgument('year', InputArgument::REQUIRED, "Show data for year...");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var $db Connection */
-        $io = new SymfonyStyle($input,$output);
+        $io = new SymfonyStyle($input, $output);
         $db = $this->getContainer()->get('database_connection');
 
         /* $year argument is required */
@@ -38,15 +38,13 @@ class ReportYearlyCommand extends ContainerAwareCommand
             die("Error! Invalid year number");
         }
 
-        $personClass = new Person($db);
-        $persons = $personClass->getPersons();
-
+        /* didn't spent time to figure out how to get connection in own class by not extending container class, getting just a connection, symphony stuff */
         $displayClass = new Statistics($db);
-        $yearlyStats =  $displayClass->getYearStat($year, true);
+        $yearlyStats = $displayClass->getYearStat($year, true);
 
         $tableHeads = array_merge(array(
             'Profile'
-            ), $displayClass->getMonths()
+        ), $displayClass->getMonths()
         );
 
         // Show data in a table - headers, data

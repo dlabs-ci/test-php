@@ -12,7 +12,7 @@ class Views
 
     function __construct($db)
     {
-        /** @var $this ->db Connection */
+        /** @var $this->db Connection */
         $this->db = $db;
     }
 
